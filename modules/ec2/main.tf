@@ -1,12 +1,7 @@
 data "aws_caller_identity" "current" {}
 
-data "aws_ami" "ubuntu" {
+data "aws_ami" "ec2_instance" {
   most_recent = true
-
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server-*"]
-  }
 
   filter {
     name   = "virtualization-type"
@@ -17,7 +12,7 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_instance" "web" {
-  ami           = "${data.aws_ami.ubuntu.id}"
+  ami           = "${data.aws_ami.ec2_instance.id}"
   instance_type = "t2.micro"
 
   tags = {
